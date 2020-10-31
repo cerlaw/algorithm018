@@ -1,0 +1,56 @@
+/**
+ * 独一无二的出现次数
+ * https://leetcode-cn.com/submissions/detail/119592318/
+ */
+public class UniqueNumberOfOccurences {
+    /**
+     * 时间负责度O(n)，空间负责度O(n)
+     * @param arr
+     * @return
+     */
+    public boolean solution(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return true;
+        }
+        //排序
+        Arrays.sort(arr);
+        //使用HashSet 判断该出现次数是否已经出现过
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < arr.length; i++) {
+            int count = 1;
+            while (i + 1 < arr.length) {
+                if (arr[i + 1] == arr[i]) {
+                    i++;
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            //该出现次数已经出现过，直接返回false
+            if (set.contains(count)) {
+                return false;
+            } else {
+                set.add(count);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 暴力法，直接计算arr中所有数字出现的次数到HashMap中，再把出现的次数加到HashSet中，最后比较map和set的大小
+     * 时间复杂度O(n)，空间复杂度O(n)
+     * @param arr
+     * @return
+     */
+    public boolean solution(int[] arr) {
+        Map<Integer, Integer> occur = new HashMap<>();
+        for (int i : arr) {
+            occur.put(i, occur.getOrDefault(i, 0) + 1);
+        }
+        Set<Integer> set = new HashSet<>();
+        for (Map.Entry<Integer, Integer> entry: occur.entrySet()) {
+            set.add(entry.getValue());
+        }
+        return set.size() == occur.size();
+    }
+}

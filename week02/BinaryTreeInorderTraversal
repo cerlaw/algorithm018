@@ -1,0 +1,44 @@
+/**
+ * 题目：二叉树的中序遍历
+ * https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
+ */
+public class BinaryTreeInorderTraversal {
+    // public List<Integer> solution(TreeNode root) {
+    //     //递归：时间复杂度O(n)，空间复杂度O(n)
+    //     List<Integer> res = new ArrayList<>();
+    //     if (root != null) {
+    //         inorderCore(root, res);
+    //     }
+    //     return res;
+    // }
+
+    // public void inorderCore(TreeNode root, List<Integer> res) {
+    //     if (root.left != null) {
+    //         inorderCore(root.left, res);
+    //     }
+    //     res.add(root.val);
+    //     if (root.right != null) {
+    //         inorderCore(root.right, res);
+    //     }
+    // }
+
+    public List<Integer> solution(TreeNode root) {
+        //迭代，时间复杂度O(n),空间复杂度O(n)
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        while (!stack.isEmpty() || tmp != null) {
+            if (tmp != null) {
+                //不断地走到左子叶节点
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                TreeNode node = stack.pop();
+                res.add(node.val);
+                //转到右节点
+                tmp = node.right;
+            }
+        }
+        return res;
+    }
+}

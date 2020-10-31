@@ -1,0 +1,47 @@
+/**
+ * N叉树的前序遍历
+ * https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/
+ */
+public class NaryTreePreorderTraveral {
+    // public List<Integer> solution(Node root) {
+    //     //递归,时间复杂度O(n),空间复杂度O(n)
+    //     List<Integer> res = new ArrayList<>();
+    //     preorderCore(root, res);
+    //     return res;
+    // }
+
+    // public void preorderCore(Node root, List<Integer> res) {
+    //     if (root == null) {
+    //         return;
+    //     }
+    //     //先加自己，再递归children
+    //     res.add(root.val);
+    //     for (Node n: root.children) {
+    //         preorderCore(n, res);
+    //     }
+    // }
+
+    //迭代，时间复杂度O(n)，空间复杂度O(n)，取决于结点的数量
+    public List<Integer> solution(Node root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        LinkedList<Node> stack = new LinkedList<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            //拿出下一个需要遍历的结点
+            Node n = stack.pollLast();
+            res.add(n.val);
+            //不改变原node结构
+            List<Node> children = n.children;
+            Collections.reverse(children);
+            //翻转后插入到队尾的都是即将遍历的节点
+            for (Node node: children) {
+                stack.add(node);
+            }
+
+        }
+        return res;
+    }
+}

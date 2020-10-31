@@ -1,0 +1,44 @@
+/**
+ * 有效的字母异位词
+ * https://leetcode-cn.com/problems/valid-anagram/
+ */
+public class VaildAnagram {
+    /**
+     * 通过两次遍历后分别count每个char出现的次数是否相等
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean solution(String s, String t) {
+        if (s == null || t == null) {
+            return false;
+        }
+        int[] count = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < t.length(); i++) {
+            if (--count[t.charAt(i) - 'a'] < 0) {
+                return false;
+            }
+        }
+        return s.length() == t.length();
+    }
+
+    /**
+     * 对s,t的char数组排序后进行比较
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean solution(String s, String t) {
+        if (s == null || t == null) {
+            return false;
+        }
+        char[] ss = s.toCharArray();
+        char[] ts = t.toCharArray();
+        Arrays.sort(ss);
+        Arrays.sort(ts);
+        return new String(ss).equals(new String(ts));
+    }
+}

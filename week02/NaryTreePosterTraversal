@@ -1,0 +1,45 @@
+/**
+ * 题目：N叉树的后序遍历
+ * https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/
+ */
+public class NaryTreePosterTraversal {
+    //递归，时间复杂度O(n),空间复杂度O(n)
+    // public List<Integer> solution(Node root) {
+    //     List<Integer> res = new ArrayList<>();
+    //     postorderCore(root, res);
+    //     return res;
+    // }
+
+    // public void postorderCore(Node root, List<Integer> res) {
+    //     if (root == null) {
+    //         return;
+    //     }
+    //     List<Node> children = root.children;
+    //     for (Node node: children) {
+    //         postorderCore(node, res);
+    //     }
+    //     res.add(root.val);
+    // }
+
+
+    //迭代，时间复杂度O(n)，空间复杂度O(n),空间复杂度是根据节点的个数所决定的
+    public List<Integer> solution(Node root) {
+        LinkedList<Integer> res = new LinkedList<>();
+        //通过栈的特性，将children的方向翻过来
+        Stack<Node> stack = new Stack<>();
+        if (root == null) {
+            return res;
+        }
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            //通过这个addFirst把子节点排到前面去从而实现后序遍历
+            res.addFirst(node.val);
+            for (Node n: node.children) {
+                stack.push(n);
+            }
+        }
+        return res;
+    }
+}
