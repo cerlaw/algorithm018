@@ -1,0 +1,73 @@
+/**
+ * 题目：滑动窗口的最大值
+ * https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/
+ */
+public class SlidingWindowMaximum {
+    //1、暴力法
+    //2、暴力法的优化
+    public int[] solution1(int[] nums, int k) {
+        int n = nums.length;
+        if (n * k == 0) {
+            return new int[0];
+        }
+        if (n == 1) {
+            return nums;
+        }
+        int[] res = new int[n - k + 1];
+        for (int i = 0; i < n - k + 1; i++) {
+            if (i != 0 && res[i - 1] != nums[i - 1]) {
+                //要与新进来窗口的进行比较
+                res[i] = Math.max(res[i - 1], nums[i + k - 1]);
+            } else {
+                int max = nums[i];
+                for (int j = i + 1; j < i + k; j++) {
+                    if (nums[j] > max) {
+                        max = nums[j];
+                    }
+                }
+                res[i] = max;
+            }
+        }
+        return res;
+    }
+
+    //3、将数组根据k的大小分块，使用动态规划的方法分别计算出块中从左到右的最大值以及从右到左的最大值，取两块的最大值
+    public int[] solution2(int[] nums, int k) {
+        int n = nums.length;
+        if (n * k == 0) {
+            return new int[0];
+        }
+        if (k == 1) {
+            return nums;
+        }
+
+        int[] left = new int[n];
+        left[0] = nums[0];
+        int[] right = new int[n];
+        right[n - 1] = nums[n - 1];
+
+        for (int i = 1; i < n; i++) {
+            //计算出块中i从左到右的最大值
+            if ((i % k == 0)) {
+                left[i] = nums[i];
+            } else {
+                left[i] = Math.max(left[i - 1], nums[i]);
+            }
+
+            //计算出块中j从右到左的最大值
+            int j = n - i - 1;
+            if ((j + 1) % k == 0) {
+                right[j] = nums[j];
+            } else {
+                right[j] = Math.max(right[j + 1], nums[j]);
+            }
+        }
+
+        //得出两个块的最大值边是该索引的滑动窗口最大值
+        int[] res = new int[n - k + 1];
+        for (int i = 0; i < n - k + 1; i++) {
+            res[i] = Math.max(left[i + k - 1], right[i]);
+        }
+        return res;
+    }
+}
