@@ -1,5 +1,5 @@
 public class BackSpaceStringCompare {
-    public int solution(int n) {
+    public int solution(String S, String T) {
         //采用双指针 + 倒叙遍历的方法 ，空间复杂度为O(1)
         int i = S.length() - 1;
         int j = T.length() - 1;

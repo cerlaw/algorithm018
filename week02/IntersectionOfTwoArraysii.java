@@ -1,13 +1,17 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 题目：350两个数组的交集 II
  * https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/
  */
-public class IntersectionOfTwoArrays {
+public class IntersectionOfTwoArraysii {
     public int[] solution(int[] nums1, int[] nums2) {
         //1、使用HashMap,时间复杂度为O(m + n),空间复杂度为O(min(m,n))
         if (nums1.length > nums2.length) {
             //减少哈希表、结果数组的空间
-            return intersect(nums2, nums1);
+            return solution(nums2, nums1);
         }
 
         Map<Integer, Integer> map = new HashMap<>();
