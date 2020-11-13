@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * 独一无二的出现次数
  * https://leetcode-cn.com/submissions/detail/119592318/
@@ -42,7 +44,7 @@ public class UniqueNumberOfOccurences {
      * @param arr
      * @return
      */
-    public boolean solution(int[] arr) {
+    public boolean solution2(int[] arr) {
         Map<Integer, Integer> occur = new HashMap<>();
         for (int i : arr) {
             occur.put(i, occur.getOrDefault(i, 0) + 1);
