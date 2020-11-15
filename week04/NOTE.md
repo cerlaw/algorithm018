@@ -1,5 +1,68 @@
 #Week4学习笔记
 
+## 深度优先搜索、广度优先搜索
+
+两者本质上就是一种暴力搜索，简单朴素的搜索
+
+### 搜索 - 遍历
+
+- 每个节点**都要**访问一次
+- 每个节点**仅仅只要**访问一次
+- 对于访问节点的顺序不同可分为
+    - 深度优先搜索：Depth First Search(DFS)
+    - 广度优先搜索：Breath First Search（BFS）
+
+### 深度优先搜索代码模板(递归实现)
+```java
+public class LevelOrderWithDFS {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> allResults = new ArrayList<>();
+        if (root == null) {
+            return allResults;
+        }
+        travel(root, 0, allResults);
+        return allResults;
+    }
+    
+    public void travel(TreeNode root, int level, List<List<Integer>> allResults) {
+        if (level == allResults.size()) {
+            allResults.add(new ArrayList<>());
+        }
+        allResults.get(level).add(root.val);
+        for(TreeNode node : root.children) {
+            travel(children, level + 1, allResults);
+        }
+    }
+}
+```
+如果不用递归的话，手动维护一个栈去模拟
+
+### 广度优先搜索代码模板（使用队列）
+对于广度优先搜索可以想象是一个水滴滴到湖水中间，向四周扩散出去的纹路
+```java
+public class LevelOrderWithBFS {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (root == null) {
+            return results;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                queue.addAll(node.children);
+            }
+            results.add(level);
+        } 
+        return results;
+    }
+}
+```
+
 ## 贪心算法
 
 ###贪心算法是什么
@@ -36,3 +99,37 @@ while(能够朝给定总目标前进一步) {
 }
 由所有可解元素组合成问题的一个可行解
 ```
+
+##二分查找
+
+###二分查找的前提
+
+- 目标函数单调性（单调递增或者递减）
+- 存在上下界（bounded）
+- 能够通过索引访问（index accessible）
+
+###模板(牢记)
+```java
+public class BinarySearch {
+    public int binarySearch(int[] array, int target) {
+        int left = 0, right = array.length - 1, mid;
+        while (left <= right) {
+            mid = (right - left) / 2 + left;
+            if (array[mid] == target) {
+                //find the target,break or return
+                return mid;
+            } else if (array[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+}
+
+```
+
+### 牛顿法 
+
+在力扣69：x的平方根题目中可以使用牛顿法去逼近。
