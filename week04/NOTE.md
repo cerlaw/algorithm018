@@ -133,3 +133,10 @@ public class BinarySearch {
 ### 牛顿法 
 
 在力扣69：x的平方根题目中可以使用牛顿法去逼近。
+
+### 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
+
+思路：首先由left、right计算得出mid，如果nums[left] < nums[mid] && nums[mid] > nums[right],则证明左侧是有序的，
+右侧是无序的。更新left为mid + 1，继续比较直到nums[left] < nums[mid] < nums[right]。
+反之nums[left] > nums[mid] && nums[mid] > nums[right],则证明右侧是有序的，
+左侧是无序的。则更新right = mid - 1,继续比较直到nums[left] < nums[mid] < nums[right]。
