@@ -20,20 +20,22 @@
 
 ### Java的递归代码模板
 ```java
-public void recursion(int level, int param) {
-    //terminator
-    if (level >= MAX_LEVEL) {
-        //process result
-        return;    
+public class RecursionTemplate {
+    public void recursion(int level, int param) {
+        //terminator
+        if (level >= MAX_LEVEL) {
+            //process result
+            return;    
+        }
+        
+        //process current logic
+        process(level, param);
+        
+        //drill down
+        recursion(level + 1, param);
+        
+        //restore current status
     }
-    
-    //process current logic
-    process(level, param);
-    
-    //drill down
-    recursion(level + 1, param);
-    
-    //restore current status
 }
 ```
 ### 问题
@@ -61,16 +63,18 @@ public void recursion(int level, int param) {
 
 模板
 ```java
-public int divide_conquer(Problem problem) {
-    if (problem == null) {
-        int res = process_last_result();
-        return res;
+public class DivideTemplate {
+    public int divide_conquer(Problem problem) {
+        if (problem == null) {
+            int res = process_last_result();
+            return res;
+        }
+        subProblems = split_problem(problem);
+        res0 = divide_conquer(subProblem[0]);
+        res1 = divide_conquer(subProblem[1]);
+        
+        result = process_result(res0, res1);
+        return result;
     }
-    subProblems = split_problem(problem);
-    res0 = divide_conquer(subProblem[0]);
-    res1 = divide_conquer(subProblem[1]);
-    
-    result = process_result(res0, res1);
-    return result;
 }
 ```
