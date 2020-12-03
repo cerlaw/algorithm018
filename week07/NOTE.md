@@ -67,3 +67,60 @@ public class Trie {
     
 }
 ```
+
+## 并查集
+
+遇到这类题目，调用模板直接套上去即可
+
+### 使用场景
+
+判断两个个体是不是在一个集合当中
+- 组团、配对问题
+- Group or not
+
+### 基本操作
+
+- makeSet(s):建立一个新的并查集，其中包含s个元素集合
+- unionSet(x, y):把元素x和元素y所在的集合合并，要求x和y所在的集合不相交，如果系相交则不合并
+- find(x):找到元素x所在的集合的代表，该操作也可以用于判断两个元素是否位于同一个集合，只要将它们各自的代表比较一下就可以了。
+
+### 模板代码
+
+```java
+class UnionFind {
+    //多少个独立的节点
+    private int count = 0;
+    private int[] parent;
+    public UnionFind(int n) {
+        count = n;
+        parent = new Parent[n];
+        for (int i = 0; i < count; i++) {
+            //自己的父节点就是自己
+            parent[i] = i;
+        }
+    }
+    
+    public int findParent(int p) {
+        //带路径压缩的
+        /*if (p == parent[p]) {
+            return p;
+        }
+        parent[p] = findParent(parent[p]);
+        return parent[p];*/
+        //不带路径压缩
+        return p == parent[p] ? p : findParent(parent[p]);
+    }
+    
+    public void union(int p, int q) {
+        int parentP = findParent(p);
+        int parentQ = findParent(q);
+        if (parentP == parentQ) {
+            return;
+        }
+        //p指向q
+        parent[parentP] = parentQ;
+        count--;
+    }
+}
+```
+
