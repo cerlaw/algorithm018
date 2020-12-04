@@ -133,3 +133,41 @@ class UnionFind {
 3. 搜索方向：DFS、BFS
 - 双向搜索
 - 启发式搜索（使用优先队列），又叫A*算法或者优先级搜索
+
+
+### 双向BFS代码模板
+```java
+public class TwoEndedBfs {
+    
+    public int twoEndedBfs(String begin, String end, String end) {
+        
+        Set<String> beginSet = new HashSet<>();
+        Set<String> endSet = new HashSet<>();
+        Set<String> visited = new HashSet<>();
+        int step = 1;
+        
+        beginSet.add(begin);
+        endSet.add(end);
+        visited.add(begin);
+        visited.add(end);
+        while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+            int size = beginSet.size();
+            Set<String> temp = new HashSet<>();
+            for (String s : beginSet) {
+                if (endSet.contains(s)) {
+                    return step + 1;
+                }
+                //...
+                tmp.add(new String());
+                //...
+            }
+            beginSet = temp;
+            if (beginSet.size() > endSet.size()) {
+                swap(beginSet, endSet);
+            }
+            step++;
+        }
+        return 0;
+    }
+}
+```
