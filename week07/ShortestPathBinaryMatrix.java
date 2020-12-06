@@ -17,11 +17,13 @@ public class ShortestPathBinaryMatrix {
             int row;
             int col;
             int distance;
+            int step;
 
-            public Node(int row, int col, int distance) {
+            public Node(int row, int col, int distance, int step) {
                 this.row = row;
                 this.col = col;
                 this.distance = distance;
+                this.step = step;
             }
         }
 
@@ -69,7 +71,9 @@ public class ShortestPathBinaryMatrix {
 //        }
 
         /**
-         * 使用启发式搜索
+         * 使用启发式搜索，但是一直通过不了，可以的话助教也帮我review一下
+         *
+         * 不通过测试用例[[0,1,0,0,0,0],[0,1,1,1,1,1],[0,0,0,0,1,1],[0,1,0,0,0,1],[1,0,0,1,0,1],[0,0,1,0,1,0]]
          *
          * @param grid
          * @return
@@ -85,14 +89,16 @@ public class ShortestPathBinaryMatrix {
             int[] vertical = new int[]{0, 1, 0, -1, 1, -1, -1, 1};
 
             int step = 1;
-            //A*使用优先队列
-            PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.distance));
-            queue.offer(new Node(0, 0, length - 1 + length - 1));
+            // Queue<Node> queue = new LinkedList<>();
+            //优先取离终点近的点
+            PriorityQueue<Node> queue = new PriorityQueue<>((o1, o2) -> o1.distance - o2.distance);
+            queue.offer(new Node(0, 0, length - 1 + length - 1, step));
             grid[0][0] = 1;
             while (!queue.isEmpty()) {
                 Node node = queue.poll();
+                System.out.println("row: " + node.row + " col: " + node.col);
                 if (node.row == length - 1 && node.col == length - 1) {
-                    return step;
+                    return node.step;
                 }
                 for (int j = 0; j < 8; j++) {
                     int newRow = node.row + horizon[j];
@@ -100,8 +106,9 @@ public class ShortestPathBinaryMatrix {
                     if (newRow >= 0 && newCol >= 0 && newRow < length && newCol < length) {
                         if (grid[newRow][newCol] == 0) {
                             grid[newRow][newCol] = 1;
-                            step++;
-                            queue.offer(new Node(newRow, newCol, (length - 1) * 2 - newRow - newCol));
+                            // System.out.println("newRow: " + newRow + " newCol: " + newCol);
+                            //新的node都比现在的node的step多1
+                            queue.offer(new Node(newRow, newCol,(length - 1) * 2 - newRow - newCol, node.step + 1));
                         }
                     }
                 }
