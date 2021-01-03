@@ -61,7 +61,7 @@
  - 两个元素： 大小、替换策略
  - Hash Table + Double LinkedList
  
- - O(1)查询、O(1)修改、更新
+ - O(1)查询、O(1)修改、更新 
  
  替换原则：
  - LFU - least frequently used
